@@ -10,6 +10,10 @@ An open, **evidence-graded** synthesis of neuroscience & cognitive science — d
 > [!warning] Not medical advice
 > Educational synthesis only. Confidence tags **[high]/[medium]/[low]** mark evidence strength; creator claims are flagged where they outrun the evidence. Verify against the cited primary sources before acting. See [[DISCLAIMER]].
 
+## ▶ Start here
+
+**[🗺️ Interactive Learning Atelier](static/atelier.html)** — a top-down visual map of the whole domain: pick a learning route (e.g. *craving arc*, *plasticity arc*), see prerequisites and how concepts connect, track what you've studied, and jump straight into any section or deep-research audit.
+
 ## How it was built
 - **Sourced** from Andrew Huberman, Peter Attia, Rhonda Patrick, Scott Barry Kaufman, and Robert Sapolsky's Stanford *Human Behavioral Biology* course (598 episodes/lectures).
 - **Synthesized** into confidence-graded section pages (full transcripts are *not* republished — copyright).

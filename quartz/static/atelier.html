@@ -1,0 +1,2072 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Neural Science Knowledge Atelier</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #171812;
+      --ink-soft: #2f3329;
+      --charcoal: #10110d;
+      --charcoal-2: #191a15;
+      --paper: #f4f1e8;
+      --paper-2: #ebe4d6;
+      --bone: #fffdf7;
+      --line: rgba(23, 24, 18, 0.16);
+      --line-dark: rgba(244, 241, 232, 0.16);
+      --muted: #6b6a61;
+      --muted-dark: #b8b0a3;
+      --green: #273523;
+      --sage: #8a956c;
+      --clay: #a05b38;
+      --umber: #705239;
+      --aubergine: #5b4655;
+      --oxblood: #8a3e4a;
+      --graphite: #5f5f58;
+      --blue: #315e6d;
+      --shadow: 0 22px 55px rgba(23, 24, 18, 0.16);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--sans);
+      background:
+        linear-gradient(90deg, rgba(23, 24, 18, 0.025) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(rgba(23, 24, 18, 0.025) 1px, transparent 1px) 0 0 / 42px 42px,
+        var(--paper);
+      line-height: 1.42;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    select,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    .field:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 3px;
+      box-shadow: 0 0 0 5px rgba(49, 94, 109, 0.14);
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 206px minmax(0, 1fr) 386px;
+      min-height: 100vh;
+    }
+
+    .rail {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.035) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.035) 75%) 0 0 / 16px 16px,
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%) 0 0 / 16px 16px,
+        var(--charcoal);
+      color: var(--paper);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .brand {
+      padding: 32px 26px 24px;
+      border-bottom: 1px solid var(--line-dark);
+    }
+
+    .woven-mark {
+      width: 58px;
+      height: 58px;
+      margin-bottom: 26px;
+      position: relative;
+      transform: rotate(45deg);
+    }
+
+    .woven-mark span {
+      position: absolute;
+      inset: auto;
+      width: 22px;
+      height: 22px;
+      background: #31442e;
+      border: 1px solid rgba(244, 241, 232, 0.12);
+      box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.045);
+    }
+
+    .woven-mark span:nth-child(1) { left: 0; top: 18px; }
+    .woven-mark span:nth-child(2) { left: 18px; top: 0; }
+    .woven-mark span:nth-child(3) { left: 18px; top: 36px; }
+    .woven-mark span:nth-child(4) { left: 36px; top: 18px; }
+    .woven-mark span:nth-child(5) { left: 18px; top: 18px; background: #263523; }
+
+    .brand h1 {
+      margin: 0;
+      max-width: 150px;
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 10px 0 0;
+      color: var(--muted-dark);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .rail-nav {
+      padding: 20px 0;
+    }
+
+    .rail-label {
+      margin: 20px 26px 10px;
+      color: rgba(244, 241, 232, 0.55);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .rail-link {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 26px;
+      border: 0;
+      color: rgba(244, 241, 232, 0.82);
+      background: transparent;
+      text-align: left;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .rail-link:hover,
+    .rail-link.active {
+      color: var(--bone);
+      background: rgba(139, 149, 108, 0.18);
+    }
+
+    .rail-icon {
+      width: 19px;
+      height: 19px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(244, 241, 232, 0.28);
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .member {
+      margin: 22px;
+      padding: 14px;
+      border: 1px solid var(--line-dark);
+      color: var(--muted-dark);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .member strong {
+      display: block;
+      color: var(--paper);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .main {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 8;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 24px 34px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(244, 241, 232, 0.94);
+      backdrop-filter: blur(18px);
+    }
+
+    .title-block {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(200px, 270px);
+      gap: 24px;
+      align-items: end;
+    }
+
+    .title-block h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(34px, 4vw, 56px);
+      font-weight: 400;
+      line-height: 0.96;
+      letter-spacing: 0;
+      max-width: none;
+    }
+
+    .title-block p {
+      margin: 0 0 7px;
+      max-width: 330px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .controls {
+      display: grid;
+      gap: 12px;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .field {
+      height: 42px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.72);
+      color: var(--ink);
+      padding: 0 12px;
+      min-width: 220px;
+      border-radius: 3px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.42);
+    }
+
+    .field:focus {
+      border-color: rgba(39, 53, 35, 0.55);
+      box-shadow: 0 0 0 3px rgba(39, 53, 35, 0.08);
+    }
+
+    select.field {
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+        linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+      background-position:
+        calc(100% - 16px) 18px,
+        calc(100% - 11px) 18px;
+      background-size: 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 32px;
+    }
+
+    .segmented {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.7);
+      padding: 3px;
+      gap: 3px;
+      border-radius: 3px;
+    }
+
+    .segmented button,
+    .toggle {
+      min-height: 34px;
+      border: 0;
+      padding: 0 11px;
+      color: var(--ink-soft);
+      background: transparent;
+      border-radius: 2px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    .segmented button[aria-pressed="true"] {
+      color: var(--paper);
+      background: var(--charcoal);
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.7);
+    }
+
+    .toggle::after {
+      content: "";
+      width: 28px;
+      height: 15px;
+      border: 1px solid currentColor;
+      background: linear-gradient(90deg, currentColor 0 45%, transparent 45%);
+      opacity: 0.7;
+    }
+
+    .toggle[aria-pressed="false"]::after {
+      background: linear-gradient(90deg, transparent 0 55%, currentColor 55%);
+    }
+
+    .filter-status {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .canvas {
+      padding: 28px 34px 36px;
+      overflow: hidden;
+    }
+
+    #map,
+    #routes,
+    #library,
+    #audit {
+      scroll-margin-top: var(--scroll-offset, 260px);
+    }
+
+    .map-layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 0.72fr) minmax(520px, 1.55fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .root-question,
+    .route-story,
+    .domain-panel,
+    .route-card,
+    .library-panel {
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(255, 253, 247, 0.88), rgba(235, 228, 214, 0.74)),
+        var(--bone);
+      border-radius: 4px;
+      box-shadow: 0 12px 34px rgba(23, 24, 18, 0.08);
+    }
+
+    .root-question {
+      padding: 25px;
+      display: grid;
+      align-content: start;
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .root-question::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -120px auto;
+      width: 260px;
+      height: 260px;
+      transform: rotate(45deg);
+      background:
+        linear-gradient(45deg, rgba(39, 53, 35, 0.08) 25%, transparent 25%, transparent 75%, rgba(39, 53, 35, 0.08) 75%) 0 0 / 44px 44px,
+        linear-gradient(-45deg, rgba(160, 91, 56, 0.07) 25%, transparent 25%, transparent 75%, rgba(160, 91, 56, 0.07) 75%) 0 0 / 44px 44px;
+      pointer-events: none;
+    }
+
+    .eyeline {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .root-question h3 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(26px, 3.2vw, 44px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .route-meter {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+      color: var(--ink-soft);
+    }
+
+    .meter-track {
+      height: 4px;
+      background: rgba(23, 24, 18, 0.13);
+    }
+
+    .meter-fill {
+      height: 100%;
+      width: 0;
+      background: var(--active-color, var(--green));
+      transition: width 240ms ease;
+    }
+
+    .route-note {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .map-board {
+      position: relative;
+      min-height: 650px;
+      padding: 18px;
+      border: 1px solid rgba(23, 24, 18, 0.12);
+      background:
+        linear-gradient(45deg, rgba(23, 24, 18, 0.035) 25%, transparent 25%, transparent 75%, rgba(23, 24, 18, 0.035) 75%) 0 0 / 62px 62px,
+        linear-gradient(-45deg, rgba(23, 24, 18, 0.025) 25%, transparent 25%, transparent 75%, rgba(23, 24, 18, 0.025) 75%) 0 0 / 62px 62px,
+        rgba(255, 253, 247, 0.45);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.34);
+    }
+
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .domain-panel {
+      min-height: 300px;
+      padding: 16px 14px;
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+      transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease;
+    }
+
+    .domain-panel::before {
+      content: "";
+      position: absolute;
+      width: 154px;
+      height: 154px;
+      right: -54px;
+      top: 56px;
+      z-index: -1;
+      transform: rotate(45deg);
+      background:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.09) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.09) 75%) 0 0 / 34px 34px,
+        linear-gradient(-45deg, rgba(0, 0, 0, 0.08) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.08) 75%) 0 0 / 34px 34px,
+        var(--domain-color);
+      opacity: 0.24;
+      box-shadow: none;
+    }
+
+    .domain-panel.is-dimmed {
+      opacity: 0.68;
+    }
+
+    .domain-panel.is-route {
+      border-color: color-mix(in srgb, var(--domain-color) 48%, var(--line));
+      transform: translateY(-2px);
+    }
+
+    .domain-head {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 9px 11px;
+      align-items: start;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .domain-index {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      color: var(--domain-color);
+      font-size: 11px;
+    }
+
+    .domain-head h3 {
+      margin: 0;
+      min-width: 0;
+      color: var(--ink);
+      font-size: 11px;
+      line-height: 1.15;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+
+    .domain-head p {
+      grid-column: 2;
+      margin: -3px 0 0;
+      color: var(--ink-soft);
+      font-size: 12px;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .node-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .empty-domain {
+      padding: 14px 0 2px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      border-top: 1px solid var(--line);
+    }
+
+    .node-chip {
+      width: 100%;
+      min-height: 58px;
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid rgba(23, 24, 18, 0.2);
+      background: rgba(255, 253, 247, 0.94);
+      color: var(--ink);
+      text-align: left;
+      padding: 10px 9px;
+      border-radius: 3px;
+      position: relative;
+      z-index: 1;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, opacity 160ms ease;
+    }
+
+    .node-chip:hover,
+    .node-chip:focus-visible {
+      transform: translateX(3px);
+      border-color: color-mix(in srgb, var(--domain-color) 48%, var(--line));
+    }
+
+    .node-chip.is-selected {
+      color: var(--paper);
+      background: var(--charcoal);
+      border-color: var(--charcoal);
+    }
+
+    .node-chip.is-route:not(.is-selected) {
+      background:
+        linear-gradient(135deg, rgba(255, 253, 247, 0.94), rgba(255, 253, 247, 0.86)),
+        color-mix(in srgb, var(--domain-color) 12%, var(--bone));
+      border-color: color-mix(in srgb, var(--domain-color) 52%, var(--line));
+    }
+
+    .node-chip.is-hidden {
+      display: none;
+    }
+
+    .node-chip.is-muted {
+      opacity: 0.72;
+    }
+
+    .node-chip:disabled,
+    .primary-action:disabled,
+    .icon-button:disabled {
+      cursor: default;
+      opacity: 0.48;
+    }
+
+    .check {
+      width: 17px;
+      height: 17px;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      color: color-mix(in srgb, var(--domain-color) 76%, var(--ink));
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .is-selected .check {
+      color: var(--sage);
+    }
+
+    .check.done::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: currentColor;
+      display: block;
+    }
+
+    .node-copy strong {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.18;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+
+    .node-copy span {
+      display: block;
+      margin-top: 4px;
+      color: #56584f;
+      font-size: 12px;
+      line-height: 1.3;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+
+    .is-selected .node-copy strong {
+      color: var(--paper);
+    }
+
+    .is-selected .node-copy span {
+      color: rgba(244, 241, 232, 0.72);
+    }
+
+    .kind {
+      color: #5f5f58;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    .is-selected .kind {
+      color: rgba(244, 241, 232, 0.72);
+    }
+
+    .inspector {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      color: var(--paper);
+      background:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.026) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.026) 75%) 0 0 / 22px 22px,
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.02) 75%) 0 0 / 22px 22px,
+        var(--charcoal-2);
+      border-left: 1px solid rgba(0, 0, 0, 0.34);
+    }
+
+    .inspector-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 30px 28px 18px;
+      border-bottom: 1px solid var(--line-dark);
+    }
+
+    .inspector-head span,
+    .mini-label {
+      color: rgba(244, 241, 232, 0.58);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .arrow-pair {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-button {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line-dark);
+      background: transparent;
+      color: var(--paper);
+      display: grid;
+      place-items: center;
+      border-radius: 2px;
+    }
+
+    .icon-button:hover {
+      background: rgba(244, 241, 232, 0.08);
+    }
+
+    .inspector-body {
+      padding: 28px;
+      overflow: auto;
+    }
+
+    .swatch-line {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .node-swatch {
+      width: 52px;
+      height: 52px;
+      background:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.12) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.12) 75%) 0 0 / 18px 18px,
+        linear-gradient(-45deg, rgba(0, 0, 0, 0.13) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.13) 75%) 0 0 / 18px 18px,
+        var(--active-color, var(--green));
+      border: 1px solid rgba(244, 241, 232, 0.18);
+    }
+
+    .inspector h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      border: 1px solid var(--line-dark);
+      color: rgba(244, 241, 232, 0.78);
+      padding: 4px 7px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .inspector p {
+      color: rgba(244, 241, 232, 0.78);
+      font-size: 14px;
+    }
+
+    .section-rule {
+      margin: 22px 0;
+      border: 0;
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .detail-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 8px;
+      padding: 0;
+      margin: 10px 0 0;
+      list-style: none;
+    }
+
+    .mini-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      color: rgba(244, 241, 232, 0.78);
+      font-size: 13px;
+    }
+
+    .mini-list li::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      margin-top: 4px;
+      border: 1px solid var(--sage);
+      background: rgba(138, 149, 108, 0.12);
+    }
+
+    .confidence {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .confidence-bars {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 5px;
+    }
+
+    .confidence-bars span {
+      height: 8px;
+      border: 1px solid var(--line-dark);
+      background: transparent;
+    }
+
+    .confidence-bars span.filled {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+
+    .links {
+      display: grid;
+      gap: 9px;
+      margin-top: 10px;
+    }
+
+    .links a,
+    .primary-action {
+      min-height: 43px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--line-dark);
+      color: var(--paper);
+      background: transparent;
+      text-decoration: none;
+      padding: 0 13px;
+      border-radius: 2px;
+      font-size: 13px;
+    }
+
+    .links a:hover,
+    .primary-action:hover {
+      background: rgba(244, 241, 232, 0.08);
+    }
+
+    .primary-action {
+      width: 100%;
+      margin-top: 20px;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .inspector-foot {
+      padding: 18px 28px 28px;
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .route-strip {
+      border-top: 1px solid var(--line);
+      background: rgba(255, 253, 247, 0.55);
+      padding: 20px 34px 28px;
+    }
+
+    .route-strip-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    .route-strip h2,
+    .library-panel h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .route-strip p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .route-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(164px, 1fr));
+      gap: 10px;
+    }
+
+    .route-card {
+      min-height: 142px;
+      padding: 15px;
+      text-align: left;
+      border-color: color-mix(in srgb, var(--route-color) 30%, var(--line));
+      overflow: hidden;
+      position: relative;
+    }
+
+    .route-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.12;
+      background:
+        linear-gradient(45deg, var(--route-color) 25%, transparent 25%, transparent 75%, var(--route-color) 75%) 0 0 / 34px 34px,
+        linear-gradient(-45deg, var(--route-color) 25%, transparent 25%, transparent 75%, var(--route-color) 75%) 0 0 / 34px 34px;
+    }
+
+    .route-card > * {
+      position: relative;
+    }
+
+    .route-card:hover,
+    .route-card.is-active {
+      color: var(--paper);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--route-color) 70%, #000), var(--route-color));
+    }
+
+    .route-card .number {
+      display: block;
+      margin-bottom: 18px;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+    }
+
+    .route-card h3 {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .route-card p {
+      color: inherit;
+      opacity: 0.78;
+      line-height: 1.35;
+    }
+
+    .library {
+      padding: 28px 34px 48px;
+    }
+
+    .library-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+      gap: 16px;
+    }
+
+    .library-panel {
+      padding: 20px;
+    }
+
+    .dependency-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .dependency-row {
+      display: grid;
+      grid-template-columns: 170px 1fr 170px;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .dependency-row strong {
+      color: var(--ink);
+    }
+
+    .empty-state {
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px dashed var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 1500px) {
+      .shell {
+        grid-template-columns: 176px minmax(0, 1fr);
+        grid-template-areas:
+          "rail topbar"
+          "rail canvas"
+          "rail inspector"
+          "rail routes"
+          "rail library";
+      }
+
+      .rail {
+        grid-area: rail;
+      }
+
+      .main {
+        display: contents;
+      }
+
+      .topbar {
+        grid-area: topbar;
+      }
+
+      .canvas {
+        grid-area: canvas;
+      }
+
+      .inspector {
+        grid-area: inspector;
+        position: static;
+        height: auto;
+        border-left: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.34);
+      }
+
+      .route-strip {
+        grid-area: routes;
+      }
+
+      .library {
+        grid-area: library;
+      }
+
+      .inspector-body {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1fr);
+        gap: 24px;
+      }
+
+      .detail-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1120px) {
+      .map-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .root-question {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .shell {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .main {
+        display: contents;
+      }
+
+      .rail {
+        position: static;
+        order: 0;
+        height: auto;
+        display: block;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .woven-mark {
+        margin: 0;
+        flex: 0 0 auto;
+      }
+
+      .rail-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow: visible;
+        padding: 0 14px 16px;
+      }
+
+      .rail-label,
+      .member {
+        display: none;
+      }
+
+      .rail-link {
+        width: 100%;
+        min-width: 0;
+        padding: 10px 12px;
+      }
+
+      .topbar {
+        position: static;
+        order: 1;
+        grid-template-columns: 1fr;
+        padding: 24px 18px 18px;
+      }
+
+      .canvas {
+        order: 2;
+      }
+
+      .inspector {
+        order: 3;
+        width: 100%;
+      }
+
+      .route-strip {
+        order: 4;
+      }
+
+      .library {
+        order: 5;
+      }
+
+      .title-block {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .title-block h2 {
+        font-size: clamp(34px, 10vw, 48px);
+      }
+
+      .title-block p {
+        margin: 0;
+        max-width: 100%;
+      }
+
+      .controls {
+        min-width: 0;
+      }
+
+      .control-row {
+        justify-content: flex-start;
+      }
+
+      .field {
+        min-width: min(100%, 260px);
+      }
+
+      .segmented {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      .segmented button {
+        min-width: 0;
+        padding: 0 8px;
+      }
+
+      .canvas,
+      .route-strip,
+      .library {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .map-layout,
+      .library-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .domain-grid,
+      .route-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .map-board {
+        min-height: 0;
+      }
+
+      .inspector-body,
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dependency-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" aria-label="Atelier navigation">
+      <div class="brand">
+        <div class="woven-mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div>
+          <h1>Neural Science Knowledge Atelier</h1>
+          <p>Top-down map</p>
+        </div>
+      </div>
+
+      <nav class="rail-nav">
+        <div class="rail-label">Atelier</div>
+        <button class="rail-link active" type="button" data-jump="#map">
+          <span class="rail-icon">M</span><span>Map</span>
+        </button>
+        <button class="rail-link" type="button" data-jump="#routes">
+          <span class="rail-icon">R</span><span>Routes</span>
+        </button>
+        <button class="rail-link" type="button" data-jump="#library">
+          <span class="rail-icon">L</span><span>Library</span>
+        </button>
+        <button class="rail-link" type="button" data-jump="#audit">
+          <span class="rail-icon">A</span><span>Audit</span>
+        </button>
+        <div class="rail-label">Saved</div>
+        <button class="rail-link" type="button" data-route-jump="craving" aria-pressed="false">
+          <span class="rail-icon">C</span><span>Craving arc</span>
+        </button>
+        <button class="rail-link" type="button" data-route-jump="plasticity" aria-pressed="false">
+          <span class="rail-icon">P</span><span>Plasticity arc</span>
+        </button>
+      </nav>
+
+      <div class="member">
+        <strong id="studied-count">0 studied</strong>
+        <span id="route-count">0 in route</span>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="title-block">
+          <h2>Neural Science Knowledge Atelier</h2>
+          <p id="route-question">How do body state, prediction, reward, memory, attention, social context, and clinical intervention combine to shape behavior and wellbeing?</p>
+        </div>
+
+        <div class="controls" role="group" aria-label="Map controls">
+          <div class="control-row">
+            <label class="sr-only" for="search">Search the atelier</label>
+            <input class="field" id="search" type="search" placeholder="Search the atelier" autocomplete="off">
+            <label class="sr-only" for="route-select">Learning route</label>
+            <select class="field" id="route-select" aria-label="Learning route"></select>
+          </div>
+          <div class="control-row">
+            <div class="segmented" role="group" aria-label="Filter by kind">
+              <button type="button" data-kind="all" aria-pressed="true">All</button>
+              <button type="button" data-kind="core" aria-pressed="false">Core</button>
+              <button type="button" data-kind="mechanism" aria-pressed="false">Mechanism</button>
+              <button type="button" data-kind="circuit" aria-pressed="false">Circuit</button>
+              <button type="button" data-kind="method" aria-pressed="false">Method</button>
+              <button type="button" data-kind="evidence" aria-pressed="false">Evidence</button>
+            </div>
+            <button class="toggle" type="button" id="progress-toggle" aria-pressed="true">Progress</button>
+          </div>
+          <div class="filter-status" id="filter-status" role="status" aria-live="polite">26 nodes visible.</div>
+        </div>
+      </header>
+
+      <section class="canvas" id="map">
+        <div class="map-layout">
+          <section class="root-question" id="audit">
+            <div>
+              <p class="eyeline">Root question</p>
+              <h3 id="root-title">How does the brain generate motivation, seek reward, and shape choice?</h3>
+            </div>
+            <div class="route-meter">
+              <div class="route-strip-head">
+                <div>
+                  <p class="eyeline">Selected route</p>
+                  <strong id="route-name">Top-down spine</strong>
+                </div>
+                <span id="route-progress">0%</span>
+              </div>
+              <div class="meter-track" aria-hidden="true">
+                <div class="meter-fill" id="meter-fill"></div>
+              </div>
+              <p class="route-note" id="route-description">A broad path from audit and foundations into prediction, state, reward, mood, and learning.</p>
+            </div>
+          </section>
+
+          <section class="map-board" aria-label="Knowledge domain map">
+            <div class="domain-grid" id="domain-grid"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="route-strip" id="routes">
+        <div class="route-strip-head">
+          <div>
+            <h2>Learning routes</h2>
+            <p>Curated top-down paths through the map.</p>
+          </div>
+        </div>
+        <div class="route-cards" id="route-cards"></div>
+      </section>
+
+      <section class="library" id="library">
+        <div class="library-grid">
+          <article class="library-panel">
+            <p class="eyeline">Concept dependencies</p>
+            <h2>Read prerequisites before protocols.</h2>
+            <div class="dependency-list">
+              <div class="dependency-row"><strong>Motivation</strong><span>Wanting vs liking, reward prediction error, effort cost</span><span>Dopamine</span></div>
+              <div class="dependency-row"><strong>Depression treatments</strong><span>Placebo, blinding, effect size, neuroplasticity</span><span>Mood</span></div>
+              <div class="dependency-row"><strong>Circadian protocols</strong><span>PRC, DLMO, CBTmin, melanopsin, light dose</span><span>Sleep</span></div>
+              <div class="dependency-row"><strong>Protocol trust</strong><span>Evidence type, population, conflict, absorb status</span><span>Audit</span></div>
+            </div>
+          </article>
+
+          <article class="library-panel">
+            <p class="eyeline">Confidence ladder</p>
+            <h2>Absorb slowly.</h2>
+            <div class="empty-state">
+              High confidence means replicated human evidence, strong physiology, or two independent deep-research runs agreeing. Exact numbers, animal-only mechanisms, sponsor-adjacent claims, and unresolved conflicts stay provisional.
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <aside class="inspector" aria-live="polite">
+      <div class="inspector-head">
+        <span>Selected node</span>
+        <div class="arrow-pair">
+          <button class="icon-button" type="button" id="prev-node" aria-label="Previous selected route node">&lt;</button>
+          <button class="icon-button" type="button" id="next-node" aria-label="Next selected route node">&gt;</button>
+        </div>
+      </div>
+
+      <div class="inspector-body">
+        <div>
+          <div class="swatch-line">
+            <div class="node-swatch" id="detail-swatch"></div>
+            <div>
+              <h2 id="detail-title">Content Audit</h2>
+              <div class="tag-row" id="detail-tags"></div>
+            </div>
+          </div>
+          <p id="detail-summary">Read this first to know what is strong, unresolved, and inconsistent.</p>
+        </div>
+
+        <div class="detail-grid">
+          <section>
+            <span class="mini-label">Role in route</span>
+            <p id="detail-role">Trust map for the entire knowledge base.</p>
+          </section>
+
+          <section>
+            <span class="mini-label">Prerequisites</span>
+            <ul class="mini-list" id="detail-prereqs"></ul>
+          </section>
+
+          <section>
+            <span class="mini-label">Confidence</span>
+            <div class="confidence">
+              <div class="confidence-bars" id="confidence-bars"></div>
+              <span id="confidence-label">Medium</span>
+            </div>
+          </section>
+
+          <section>
+            <span class="mini-label">Review status</span>
+            <p id="detail-status">Section synthesis; provisional until source status is checked.</p>
+          </section>
+
+          <section>
+            <span class="mini-label">Reading list</span>
+            <div class="links" id="detail-links"></div>
+          </section>
+        </div>
+      </div>
+
+      <div class="inspector-foot">
+        <button class="primary-action" type="button" id="mark-studied">Mark studied</button>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const domains = [
+      { id: "foundation", index: "01", title: "Foundations", color: "#273523", note: "Causation, source trust, audit layer" },
+      { id: "prediction", index: "02", title: "Prediction", color: "#654383", note: "Priors, perception, emotion, body threat" },
+      { id: "state", index: "03", title: "State", color: "#a05b38", note: "Sleep, stress, energy, hormones" },
+      { id: "control", index: "04", title: "Control", color: "#315e6d", note: "Attention, plasticity, practice" },
+      { id: "valence", index: "05", title: "Valence", color: "#8a3e4a", note: "Reward, mood, social context, self" },
+      { id: "clinical", index: "06", title: "Clinical", color: "#58652c", note: "Interventions, contested claims, evidence" }
+    ];
+
+    const nodes = {
+      audit: {
+        domain: "foundation", kind: "evidence", confidence: 5,
+        title: "Content Audit", meta: "Trust, gaps, status hygiene",
+        summary: "Read this first to know what is strong, unresolved, and inconsistent in the knowledge base.",
+        role: "Trust map for the entire knowledge base before treating any claim as canonical.",
+        prereqs: ["Evidence status vocabulary", "Owner-review caveat", "Canonical vs provisional claims"],
+        links: [["Open audit", "CONTENT_AUDIT.html"]]
+      },
+      general: {
+        domain: "foundation", kind: "core", confidence: 6,
+        title: "General Neuroscience & Health", meta: "117 episodes; broad foundation",
+        summary: "The broad foundation page. Best for multi-level biological causation, but also the largest catch-all section.",
+        role: "Prevents single-cause explanations by forcing genes, hormones, development, environment, and evolution into one model.",
+        prereqs: ["Multi-level causation", "Mechanism vs protocol", "Sapolsky-style time scales"],
+        links: [["Open section", "../sections/general-neuroscience-health"]]
+      },
+      sources: {
+        domain: "foundation", kind: "evidence", confidence: 5,
+        title: "Source Maps", meta: "Creators, academic sources, catalogs",
+        summary: "Creator and academic source maps help decide how much weight a claim deserves before you learn it deeply.",
+        role: "Ranks the provenance of a claim before it enters your mental model.",
+        prereqs: ["Creator credibility", "Primary literature", "Commercial incentive checks"],
+        links: [["Creators", "../sources/creators"], ["Academic sources", "../sources/academic-sources"]]
+      },
+      biology: {
+        domain: "foundation", kind: "mechanism", confidence: 5,
+        title: "Behavioral Biology", meta: "Genes, hormones, development, evolution",
+        summary: "Behavior has layered causes across genes, development, hormones, environment, and evolutionary pressure.",
+        role: "Keeps learner models from collapsing into one-neurochemical explanations.",
+        prereqs: ["Developmental timing", "Endocrine context", "Environmental pressure"],
+        links: [["Foundations", "../sections/general-neuroscience-health"], ["Hormones", "../sections/hormones-endocrine-health"]]
+      },
+      perception: {
+        domain: "prediction", kind: "core", confidence: 5,
+        title: "Perception, Predictive Processing & Consciousness", meta: "Priors, prediction, IIT, psychedelics",
+        summary: "Experience is constructed from priors, context, bodily state, and incoming signal.",
+        role: "The top-down frame: the brain actively predicts and corrects, rather than passively records.",
+        prereqs: ["Priors", "Prediction error", "Attention and precision"],
+        links: [["Open section", "../sections/perception-predictive-processing-consciousness"], ["DR-011", "../sources/DR-011-audit"]]
+      },
+      emotion: {
+        domain: "prediction", kind: "mechanism", confidence: 5,
+        title: "Decision, Emotion & Language", meta: "Constructed emotion, labeling, regulation",
+        summary: "Emotion regulation and language show how body state becomes interpreted and acted on.",
+        role: "Bridge between interoception, appraisal, vocabulary, and behavior.",
+        prereqs: ["Interoception", "Affect labeling", "Reappraisal"],
+        links: [["Open section", "../sections/decision-making-emotion-language"]]
+      },
+      pain: {
+        domain: "prediction", kind: "circuit", confidence: 4,
+        title: "Pain, Injury & Physical Health", meta: "Body threat and recovery",
+        summary: "Pain sits at the boundary of body signal, threat inference, attention, recovery, and action.",
+        role: "Shows how bodily evidence becomes threat and how prediction shapes recovery.",
+        prereqs: ["Nociception", "Threat inference", "Attention"],
+        links: [["Open section", "../sections/pain-injury-physical-health"]]
+      },
+      sleep: {
+        domain: "state", kind: "core", confidence: 7,
+        title: "Sleep & Circadian", meta: "Light, melatonin, sleep architecture",
+        summary: "The master state-regulation hub for alertness, mood, learning, metabolism, and timing.",
+        role: "Anchors the whole map in biological time and recovery.",
+        prereqs: ["DLMO", "CBTmin", "Melanopsin", "Sleep pressure"],
+        links: [["Open section", "../sections/sleep-circadian-rhythms"], ["DR-004", "../sources/DR-004-audit"], ["DR-008", "../sources/DR-008-audit"]]
+      },
+      stress: {
+        domain: "state", kind: "mechanism", confidence: 6,
+        title: "Stress & Resilience", meta: "Allostasis, controllability, overload",
+        summary: "Explains when arousal is adaptive, when it becomes overload, and why controllability changes outcomes.",
+        role: "Separates adaptive challenge from cumulative wear-and-tear.",
+        prereqs: ["Allostasis", "Controllability", "Recovery dose"],
+        links: [["Open section", "../sections/stress-cortisol-resilience"], ["DR-005", "../sources/DR-005-audit"]]
+      },
+      metabolism: {
+        domain: "state", kind: "mechanism", confidence: 5,
+        title: "Metabolism, Exercise & Nutrition", meta: "Energy, nutrition, fasting, CGM",
+        summary: "Energy state, exercise, food timing, glucose, and body composition feed into cognition and mood.",
+        role: "Explains how body fuel and movement alter brain state without turning every biomarker into a destiny.",
+        prereqs: ["Energy balance", "Acute vs long-term outcomes", "Glucose interpretation"],
+        links: [["Open section", "../sections/metabolism-exercise-nutrition"], ["DR-007", "../sources/DR-007-audit"], ["DR-012", "../sources/DR-012-audit"]]
+      },
+      hormones: {
+        domain: "state", kind: "circuit", confidence: 5,
+        title: "Hormones & Endocrine", meta: "Testosterone, fertility, endocrine context",
+        summary: "Slow chemical context for energy, fertility, risk, performance, mood, and body-state interpretation.",
+        role: "Adds slow-timescale chemistry to faster state and reward models.",
+        prereqs: ["Endocrine feedback", "Deficiency vs optimization", "Fertility tradeoffs"],
+        links: [["Open section", "../sections/hormones-endocrine-health"], ["DR-006", "../sources/DR-006-audit"]]
+      },
+      longevity: {
+        domain: "state", kind: "evidence", confidence: 4,
+        title: "Longevity & Supplements", meta: "Healthspan claims and biomarkers",
+        summary: "Healthspan and supplement claims need strict evidence sorting because mechanisms often outrun outcomes.",
+        role: "Keeps biomarker claims from masquerading as lifespan evidence.",
+        prereqs: ["Biomarker vs outcome", "Commercial claims", "Risk horizon"],
+        links: [["Open section", "../sections/longevity-aging-supplementation"]]
+      },
+      focus: {
+        domain: "control", kind: "core", confidence: 5,
+        title: "Focus & Attention", meta: "Cognitive control and effort",
+        summary: "Attention decides what gets processed, learned, remembered, and acted on.",
+        role: "The gatekeeper between state, reward, and learning.",
+        prereqs: ["Executive control", "Arousal", "Effort allocation"],
+        links: [["Open section", "../sections/focus-attention-cognitive-control"]]
+      },
+      learning: {
+        domain: "control", kind: "method", confidence: 5,
+        title: "Learning & Memory", meta: "Plasticity, practice, consolidation",
+        summary: "The change engine of the KB: plasticity, practice, feedback, consolidation, and memory systems.",
+        role: "Turns mechanisms into durable change.",
+        prereqs: ["Attention", "Feedback", "Sleep consolidation"],
+        links: [["Open section", "../sections/neuroplasticity-learning-memory"]]
+      },
+      protocols: {
+        domain: "control", kind: "method", confidence: 4,
+        title: "Action Protocols", meta: "Practice, spacing, state control",
+        summary: "Protocols become useful only after the mechanism, boundary condition, and evidence status are clear.",
+        role: "Converts the map into action while keeping marketing-grade rules provisional.",
+        prereqs: ["Mechanism first", "Dose and timing", "Risk and evidence status"],
+        links: [["Learning section", "../sections/neuroplasticity-learning-memory"], ["Sleep timing", "../sections/sleep-circadian-rhythms"]]
+      },
+      ama: {
+        domain: "control", kind: "evidence", confidence: 3,
+        title: "Live Q&A / AMA", meta: "Mixed lookup layer",
+        summary: "A mixed lookup layer. Useful for search, but not the first page to use for top-down learning.",
+        role: "A reference drawer after you already know the concept you need.",
+        prereqs: ["Known target concept", "Claim verification", "Context control"],
+        links: [["Open section", "../sections/live-q-a-ama-mixed-topics"]]
+      },
+      dopamine: {
+        domain: "valence", kind: "core", confidence: 6,
+        title: "Dopamine & Addiction", meta: "Wanting, RPE, effort, craving",
+        summary: "The best page for wanting vs liking, reward prediction error, effort cost, addiction biology, and creator overreach.",
+        role: "Explains incentive salience, effort, craving, and why pleasure is not the same as pursuit.",
+        prereqs: ["Wanting vs liking", "Reward prediction error", "Effort cost"],
+        links: [["Open section", "../sections/dopamine-reward-addiction"], ["DR-003", "../sources/DR-003-dopamine-baseline"], ["DR-009", "../sources/DR-009-audit"]]
+      },
+      mood: {
+        domain: "valence", kind: "evidence", confidence: 5,
+        title: "Mood, Anxiety & Depression", meta: "SSRIs, psychedelics, gut-brain",
+        summary: "The main clinical-evidence page: SSRIs, ketamine, psychedelics, gut-brain, anxiety, and treatment skepticism.",
+        role: "Connects state, prediction, reward, and clinical interventions.",
+        prereqs: ["Placebo", "Blinding", "Effect size", "Clinical endpoints"],
+        links: [["Open section", "../sections/mood-anxiety-depression"], ["DR-001", "../sources/DR-001-audit"], ["DR-002", "../sources/DR-002-audit"], ["DR-010", "../sources/DR-010-audit"]]
+      },
+      relationships: {
+        domain: "valence", kind: "circuit", confidence: 4,
+        title: "Relationships & Social", meta: "Attachment and social context",
+        summary: "Social context changes cognition, threat, reward, attachment, and identity.",
+        role: "Adds social prediction and co-regulation to individual brain models.",
+        prereqs: ["Attachment", "Social threat", "Emotion regulation"],
+        links: [["Open section", "../sections/relationships-social-behavior"]]
+      },
+      creativity: {
+        domain: "valence", kind: "method", confidence: 4,
+        title: "Creativity & Purpose", meta: "Identity, meaning, agency",
+        summary: "Meaning, agency, identity, and creativity are long-horizon regulators of action.",
+        role: "Links motivation to long-range self models.",
+        prereqs: ["Identity", "Meaning", "Agency"],
+        links: [["Open section", "../sections/creativity-identity-purpose"]]
+      },
+      psychiatry: {
+        domain: "clinical", kind: "evidence", confidence: 4,
+        title: "Psychiatry & Disorders", meta: "Clinical syndromes",
+        summary: "Clinical syndromes and diagnosis-level reasoning. Needs more DR coverage than it currently has.",
+        role: "Organizes disorder-level reasoning without replacing clinical judgment.",
+        prereqs: ["Diagnostic category", "Treatment evidence", "Risk"],
+        links: [["Open section", "../sections/psychiatry-clinical-disorders"]]
+      },
+      dr001: {
+        domain: "clinical", kind: "evidence", confidence: 6,
+        title: "DR-001 SSRIs", meta: "Serotonin hypothesis, efficacy, harms",
+        summary: "Separates the serotonin hypothesis from SSRI efficacy, harms, withdrawal, sexual dysfunction, and emotional blunting.",
+        role: "Teaches the disease-cause vs treatment-efficacy distinction.",
+        prereqs: ["Placebo-adjusted effect", "Severity dependence", "Withdrawal estimates"],
+        links: [["Source note", "../sources/DR-001-audit"]]
+      },
+      dr002: {
+        domain: "clinical", kind: "evidence", confidence: 5,
+        title: "DR-002 Rapid Antidepressants", meta: "Ketamine, psilocybin, MDMA",
+        summary: "Ketamine, esketamine, psilocybin, and MDMA evidence with attention to expectancy and functional unblinding.",
+        role: "Shows why dramatic subjective effects complicate clinical trial interpretation.",
+        prereqs: ["Functional unblinding", "Durability", "Regulatory endpoints"],
+        links: [["Source note", "../sources/DR-002-audit"]]
+      },
+      dr003: {
+        domain: "clinical", kind: "evidence", confidence: 6,
+        title: "DR-003 Dopamine Baseline", meta: "Comedown claim audit",
+        summary: "Audits the dopamine baseline depletion story and separates addiction findings from healthy everyday reward claims.",
+        role: "Prevents overgeneralizing addiction neuroscience into everyday motivation advice.",
+        prereqs: ["Tonic vs phasic dopamine", "Addiction cohorts", "Effort cost"],
+        links: [["Source note", "../sources/DR-003-dopamine-baseline"]]
+      },
+      dr004: {
+        domain: "clinical", kind: "method", confidence: 6,
+        title: "DR-004/008 Circadian", meta: "Melatonin and light dosing",
+        summary: "Melatonin and light are real levers, but exact consumer rules are often too precise.",
+        role: "Forces timing, phase, and dose into separate questions.",
+        prereqs: ["DLMO", "PRC", "Lux vs melanopic dose"],
+        links: [["DR-004", "../sources/DR-004-audit"], ["DR-008", "../sources/DR-008-audit"]]
+      },
+      dr006: {
+        domain: "clinical", kind: "evidence", confidence: 5,
+        title: "DR-006 Testosterone", meta: "Boosters, TRT, fertility, safety",
+        summary: "Weight loss and clinical TRT differ sharply from supplement marketing and creator booster claims.",
+        role: "Separates deficiency treatment from optimization marketing.",
+        prereqs: ["TRAVERSE", "Spermatogenesis", "Hematocrit"],
+        links: [["Source note", "../sources/DR-006-audit"]]
+      },
+      dr007: {
+        domain: "clinical", kind: "method", confidence: 5,
+        title: "DR-007/012 Metabolic Claims", meta: "Fasting, autophagy, CGM spikes",
+        summary: "Fasting and CGM claims only make sense when split into calories, timing, autophagy, acute glucose, and outcomes.",
+        role: "Keeps acute metrics from becoming long-term health claims.",
+        prereqs: ["Matched calories", "Autophagy markers", "Healthy CGM range"],
+        links: [["DR-007", "../sources/DR-007-audit"], ["DR-012", "../sources/DR-012-audit"]]
+      },
+      dr009: {
+        domain: "clinical", kind: "evidence", confidence: 5,
+        title: "DR-009 GLP-1 & Addiction", meta: "Craving, alcohol, addiction evidence",
+        summary: "GLP-1 addiction evidence is promising but uneven; the alcohol signal is stronger than broad addiction claims.",
+        role: "Separates craving from consumption and clinical signal from broad creator overreach.",
+        prereqs: ["EHR confounding", "Craving vs behavior", "Substance-specific outcomes"],
+        links: [["DR-009", "../sources/DR-009-audit"]]
+      },
+      dr010: {
+        domain: "clinical", kind: "evidence", confidence: 5,
+        title: "DR-010 Gut-Brain & Mood", meta: "Diet, probiotics, depression claims",
+        summary: "Gut-brain claims need careful separation: diet patterns have stronger support than broad psychobiotic claims.",
+        role: "Prevents microbiome mechanisms from being absorbed as established mood interventions.",
+        prereqs: ["Diet vs probiotic evidence", "Peripheral vs central serotonin", "Clinical endpoints"],
+        links: [["DR-010", "../sources/DR-010-audit"]]
+      }
+    };
+
+    const routes = {
+      spine: {
+        label: "Top-down spine",
+        color: "#273523",
+        question: "How do body state, prediction, reward, memory, attention, social context, and clinical intervention combine to shape behavior and wellbeing?",
+        description: "A broad path from audit and foundations into prediction, state, reward, mood, and learning.",
+        nodes: ["audit", "general", "biology", "perception", "sleep", "stress", "dopamine", "mood", "learning"]
+      },
+      alertness: {
+        label: "Alertness",
+        color: "#315e6d",
+        question: "Why do I feel alert, foggy, wired, or tired?",
+        description: "From light and sleep timing into stress, metabolism, hormones, and attention.",
+        nodes: ["sleep", "dr004", "stress", "metabolism", "hormones", "focus", "learning"]
+      },
+      craving: {
+        label: "Craving",
+        color: "#8a3e4a",
+        question: "Why do I want things I may not even enjoy?",
+        description: "From wanting and cue reactivity to relapse, recovery, and clinical evidence.",
+        nodes: ["dopamine", "dr003", "emotion", "stress", "mood", "dr009"]
+      },
+      plasticity: {
+        label: "Plasticity",
+        color: "#5b4655",
+        question: "What actually changes the brain?",
+        description: "From attention and practice to sleep consolidation, prediction, and clinical interventions.",
+        nodes: ["learning", "protocols", "focus", "sleep", "perception", "dr002", "mood"]
+      },
+      trust: {
+        label: "Trust",
+        color: "#705239",
+        question: "Which science and wellness claims should I absorb?",
+        description: "From source credibility and review status to exact numbers, risks, and conflicts.",
+        nodes: ["audit", "sources", "dr001", "dr004", "dr007", "dr006", "dr010", "longevity"]
+      }
+    };
+
+    function loadStudied() {
+      try {
+        const value = JSON.parse(localStorage.getItem("neuro-map-studied") || "[]");
+        if (!Array.isArray(value)) return new Set();
+        return new Set(value.filter(key => Object.prototype.hasOwnProperty.call(nodes, key)));
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveStudied() {
+      try {
+        localStorage.setItem("neuro-map-studied", JSON.stringify([...state.studied]));
+      } catch {
+        filterStatus.textContent = "Progress could not be saved in this browser.";
+      }
+    }
+
+    const state = {
+      selected: "audit",
+      route: "spine",
+      kind: "all",
+      query: "",
+      showProgress: true,
+      studied: loadStudied()
+    };
+
+    const domainGrid = document.getElementById("domain-grid");
+    const routeCards = document.getElementById("route-cards");
+    const routeSelect = document.getElementById("route-select");
+    const search = document.getElementById("search");
+    const rootTitle = document.getElementById("root-title");
+    const routeQuestion = document.getElementById("route-question");
+    const routeName = document.getElementById("route-name");
+    const routeDescription = document.getElementById("route-description");
+    const routeProgress = document.getElementById("route-progress");
+    const meterFill = document.getElementById("meter-fill");
+    const studiedCount = document.getElementById("studied-count");
+    const routeCount = document.getElementById("route-count");
+    const detailSwatch = document.getElementById("detail-swatch");
+    const detailTitle = document.getElementById("detail-title");
+    const detailTags = document.getElementById("detail-tags");
+    const detailSummary = document.getElementById("detail-summary");
+    const detailRole = document.getElementById("detail-role");
+    const detailPrereqs = document.getElementById("detail-prereqs");
+    const confidenceBars = document.getElementById("confidence-bars");
+    const confidenceLabel = document.getElementById("confidence-label");
+    const detailStatus = document.getElementById("detail-status");
+    const detailLinks = document.getElementById("detail-links");
+    const markStudied = document.getElementById("mark-studied");
+    const filterStatus = document.getElementById("filter-status");
+    const prevNode = document.getElementById("prev-node");
+    const nextNode = document.getElementById("next-node");
+
+    function syncScrollOffset() {
+      const topbar = document.querySelector(".topbar");
+      const isSticky = topbar && getComputedStyle(topbar).position === "sticky";
+      const offset = isSticky ? Math.ceil(topbar.getBoundingClientRect().height + 28) : 28;
+      document.documentElement.style.setProperty("--scroll-offset", `${offset}px`);
+    }
+
+    function domainFor(node) {
+      return domains.find(domain => domain.id === node.domain);
+    }
+
+    function activeRoute() {
+      return routes[state.route];
+    }
+
+    function routeSet() {
+      return new Set(activeRoute().nodes);
+    }
+
+    function confidenceText(value) {
+      if (value >= 7) return "High";
+      if (value >= 5) return "Medium";
+      return "Hold";
+    }
+
+    function reviewStatus(node) {
+      if (node.status) return node.status;
+      if (node.title.startsWith("DR-")) return "DR reconciled; owner review pending before canonical absorption.";
+      if (node.kind === "evidence") return "Evidence layer; verify provenance before absorbing exact claims.";
+      if (node.confidence <= 4) return "Provisional section synthesis; needs stronger audit coverage.";
+      return "Section synthesis; provisional until source status is checked.";
+    }
+
+    function nodeMatches(key, node) {
+      const q = state.query.trim().toLowerCase();
+      const routeMatch = activeRoute().nodes.includes(key);
+      const kindMatch = state.kind === "all" || node.kind === state.kind;
+      const queryMatch = !q || [node.title, node.meta, node.summary, node.role, node.kind].join(" ").toLowerCase().includes(q);
+      return { routeMatch, kindMatch, queryMatch };
+    }
+
+    function visibleNodeKeys() {
+      return Object.entries(nodes)
+        .filter(([key, node]) => {
+          const match = nodeMatches(key, node);
+          return match.kindMatch && match.queryMatch;
+        })
+        .map(([key]) => key);
+    }
+
+    function reconcileSelection() {
+      const visible = visibleNodeKeys();
+      if (!visible.length) return false;
+      if (visible.includes(state.selected)) return true;
+      const routeVisible = activeRoute().nodes.find(key => visible.includes(key));
+      state.selected = routeVisible || visible[0];
+      return true;
+    }
+
+    function resultLabel(count) {
+      const kind = state.kind === "all" ? "all kinds" : state.kind;
+      const routeVisible = activeRoute().nodes.filter(key => visibleNodeKeys().includes(key)).length;
+      const query = state.query.trim();
+      if (!count) return `0 matches${query ? ` for "${query}"` : ""}. Clear search or choose another kind.`;
+      return `${count} nodes visible; ${routeVisible} in ${activeRoute().label}; filter: ${kind}.`;
+    }
+
+    function renderRouteSelect() {
+      routeSelect.innerHTML = Object.entries(routes).map(([key, route]) => (
+        `<option value="${key}">${route.label}</option>`
+      )).join("");
+      routeSelect.value = state.route;
+    }
+
+    function renderMap() {
+      const activeSet = routeSet();
+      const allVisible = visibleNodeKeys();
+      filterStatus.textContent = resultLabel(allVisible.length);
+      domainGrid.innerHTML = domains.map(domain => {
+        const domainNodes = Object.entries(nodes).filter(([, node]) => node.domain === domain.id);
+        const inRoute = domainNodes.some(([key]) => activeSet.has(key));
+        let visibleCount = 0;
+        const chips = domainNodes.map(([key, node]) => {
+          const match = nodeMatches(key, node);
+          const hidden = !match.kindMatch || !match.queryMatch;
+          if (!hidden) visibleCount += 1;
+          const muted = !match.routeMatch && state.query === "";
+          const studied = state.studied.has(key);
+          const selected = state.selected === key;
+          const routeClass = match.routeMatch ? " is-route" : "";
+          const selectedClass = selected ? " is-selected" : "";
+          const hiddenClass = hidden ? " is-hidden" : "";
+          const mutedClass = muted ? " is-muted" : "";
+          const doneClass = studied && state.showProgress ? " done" : "";
+          const ariaLabel = `${node.title}. ${node.meta}. ${node.kind}. ${studied ? "Studied" : "Not studied"}${match.routeMatch ? ". In selected route" : ""}.`;
+          return `
+            <button class="node-chip${routeClass}${selectedClass}${hiddenClass}${mutedClass}" type="button" data-node="${key}" aria-pressed="${selected}" aria-label="${ariaLabel}">
+              <span class="check${doneClass}" aria-hidden="true"></span>
+              <span class="node-copy"><strong>${node.title}</strong><span>${node.meta}</span></span>
+              <span class="kind">${node.kind}</span>
+            </button>
+          `;
+        }).join("");
+
+        return `
+          <section class="domain-panel${inRoute ? " is-route" : ""}" style="--domain-color: ${domain.color}">
+            <div class="domain-head">
+              <span class="domain-index">${domain.index}</span>
+              <h3>${domain.title}</h3>
+              <p>${domain.note}</p>
+            </div>
+            <div class="node-list">${visibleCount ? chips : '<div class="empty-domain">No matching swatches in this domain.</div>'}</div>
+          </section>
+        `;
+      }).join("");
+
+      document.querySelectorAll("[data-node]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.selected = button.dataset.node;
+          render();
+          revealInspectorIfHidden();
+          document.querySelector(`[data-node="${state.selected}"]`)?.focus({ preventScroll: true });
+        });
+      });
+    }
+
+    function renderRoutes() {
+      routeCards.innerHTML = Object.entries(routes).map(([key, route], index) => {
+        const studiedInRoute = route.nodes.filter(nodeKey => state.studied.has(nodeKey)).length;
+        const progress = Math.round((studiedInRoute / route.nodes.length) * 100);
+        return `
+          <button class="route-card${state.route === key ? " is-active" : ""}" type="button" data-route="${key}" aria-pressed="${state.route === key}" aria-current="${state.route === key ? "true" : "false"}" style="--route-color: ${route.color}">
+            <span class="number">0${index + 1}</span>
+            <h3>${route.label}</h3>
+            <p>${route.description}</p>
+            <p>${progress}% studied</p>
+          </button>
+        `;
+      }).join("");
+
+      document.querySelectorAll("[data-route]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.route = button.dataset.route;
+          state.selected = routes[state.route].nodes[0];
+          reconcileSelection();
+          render();
+          document.querySelector(`[data-node="${state.selected}"]`)?.focus({ preventScroll: true });
+          document.getElementById("map").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+    }
+
+    function renderRouteState() {
+      const route = activeRoute();
+      const studiedInRoute = route.nodes.filter(nodeKey => state.studied.has(nodeKey)).length;
+      const progress = Math.round((studiedInRoute / route.nodes.length) * 100);
+      document.documentElement.style.setProperty("--active-color", route.color);
+      rootTitle.textContent = route.question;
+      routeQuestion.textContent = route.question;
+      routeName.textContent = route.label;
+      routeDescription.textContent = route.description;
+      routeProgress.textContent = `${progress}%`;
+      meterFill.style.width = `${progress}%`;
+      studiedCount.textContent = `${state.studied.size} studied`;
+      routeCount.textContent = `${studiedInRoute} of ${route.nodes.length} in ${route.label}`;
+      routeSelect.value = state.route;
+      document.querySelectorAll("[data-route-jump]").forEach(button => {
+        const active = button.dataset.routeJump === state.route;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+    }
+
+    function renderInspector() {
+      if (!visibleNodeKeys().length) {
+        detailSwatch.style.setProperty("--active-color", "var(--graphite)");
+        detailTitle.textContent = "No matching node";
+        detailSummary.textContent = "Clear the search or choose another kind to return to the learning map.";
+        detailRole.textContent = "The current filter state has no visible concept nodes.";
+        detailTags.innerHTML = `<span class="tag">Empty filter</span>`;
+        detailPrereqs.innerHTML = "";
+        confidenceBars.innerHTML = Array.from({ length: 8 }, () => "<span></span>").join("");
+        confidenceLabel.textContent = "Hold";
+        detailStatus.textContent = "No claim is selected while the current filter has no matches.";
+        detailLinks.innerHTML = "";
+        markStudied.textContent = "Mark studied";
+        markStudied.disabled = true;
+        prevNode.disabled = true;
+        nextNode.disabled = true;
+        return;
+      }
+
+      const node = nodes[state.selected];
+      const domain = domainFor(node);
+      detailSwatch.style.setProperty("--active-color", domain.color);
+      detailTitle.textContent = node.title;
+      detailSummary.textContent = node.summary;
+      detailRole.textContent = node.role;
+      detailTags.innerHTML = [domain.title, node.kind, confidenceText(node.confidence), reviewStatus(node).split(";")[0]].map(tag => `<span class="tag">${tag}</span>`).join("");
+      detailPrereqs.innerHTML = node.prereqs.map(item => `<li>${item}</li>`).join("");
+      confidenceBars.innerHTML = Array.from({ length: 8 }, (_, index) => `<span class="${index < node.confidence ? "filled" : ""}"></span>`).join("");
+      confidenceLabel.textContent = confidenceText(node.confidence);
+      detailStatus.textContent = reviewStatus(node);
+      detailLinks.innerHTML = node.links.map(([label, href]) => `<a href="${href}"><span>${label}</span><span aria-hidden="true">-&gt;</span></a>`).join("");
+      markStudied.textContent = state.studied.has(state.selected) ? "Studied" : "Mark studied";
+      markStudied.disabled = false;
+      prevNode.disabled = false;
+      nextNode.disabled = false;
+    }
+
+    function render() {
+      reconcileSelection();
+      renderRouteState();
+      renderMap();
+      renderRoutes();
+      renderInspector();
+      syncScrollOffset();
+    }
+
+    function revealInspectorIfHidden() {
+      const inspector = document.querySelector(".inspector");
+      if (!inspector) return;
+
+      requestAnimationFrame(() => {
+        const rect = inspector.getBoundingClientRect();
+        const isVisible =
+          rect.top < window.innerHeight * 0.72 &&
+          rect.bottom > 120 &&
+          rect.left < window.innerWidth &&
+          rect.right > 0;
+
+        if (!isVisible) {
+          const topbar = document.querySelector(".topbar");
+          const topbarIsSticky = topbar && getComputedStyle(topbar).position === "sticky";
+          const offset = topbarIsSticky ? topbar.getBoundingClientRect().height + 16 : 16;
+          window.scrollTo({
+            top: Math.max(0, window.scrollY + rect.top - offset),
+            behavior: "smooth"
+          });
+        }
+      });
+    }
+
+    window.addEventListener("resize", syncScrollOffset);
+    window.addEventListener("load", syncScrollOffset);
+
+    routeSelect.addEventListener("change", () => {
+      state.route = routeSelect.value;
+      state.selected = routes[state.route].nodes[0];
+      reconcileSelection();
+      render();
+    });
+
+    search.addEventListener("input", () => {
+      state.query = search.value;
+      reconcileSelection();
+      render();
+    });
+
+    document.querySelectorAll("[data-kind]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.kind = button.dataset.kind;
+        document.querySelectorAll("[data-kind]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+        reconcileSelection();
+        render();
+      });
+    });
+
+    document.getElementById("progress-toggle").addEventListener("click", event => {
+      state.showProgress = !state.showProgress;
+      event.currentTarget.setAttribute("aria-pressed", String(state.showProgress));
+      renderMap();
+    });
+
+    markStudied.addEventListener("click", () => {
+      if (state.studied.has(state.selected)) {
+        state.studied.delete(state.selected);
+      } else {
+        state.studied.add(state.selected);
+      }
+      saveStudied();
+      render();
+    });
+
+    prevNode.addEventListener("click", () => {
+      const visible = visibleNodeKeys();
+      const routeVisible = activeRoute().nodes.filter(key => visible.includes(key));
+      const list = routeVisible.length ? routeVisible : activeRoute().nodes;
+      const index = list.indexOf(state.selected);
+      state.selected = list[(index - 1 + list.length) % list.length] || list[0];
+      render();
+    });
+
+    nextNode.addEventListener("click", () => {
+      const visible = visibleNodeKeys();
+      const routeVisible = activeRoute().nodes.filter(key => visible.includes(key));
+      const list = routeVisible.length ? routeVisible : activeRoute().nodes;
+      const index = list.indexOf(state.selected);
+      state.selected = list[(index + 1) % list.length] || list[0];
+      render();
+    });
+
+    document.querySelectorAll("[data-jump]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".rail-link").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        document.querySelector(button.dataset.jump).scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    document.querySelectorAll("[data-route-jump]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.route = button.dataset.routeJump;
+        state.selected = routes[state.route].nodes[0];
+        reconcileSelection();
+        render();
+        document.querySelector(`[data-node="${state.selected}"]`)?.focus({ preventScroll: true });
+        document.getElementById("map").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    renderRouteSelect();
+    render();
+  </script>
+</body>
+</html>
