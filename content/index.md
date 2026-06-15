@@ -1,5 +1,5 @@
 ---
-title: Neuro & Cognitive Science Knowledge Base
+title: All Sections
 tags: [moc, home]
 ---
 

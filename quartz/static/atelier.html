@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/neuro-kb/">
   <link rel="icon" href="data:,">
   <title>Neural Science Knowledge Atelier</title>
   <style>
@@ -1432,7 +1433,7 @@
         summary: "The broad foundation page. Best for multi-level biological causation, but also the largest catch-all section.",
         role: "Prevents single-cause explanations by forcing genes, hormones, development, environment, and evolution into one model.",
         prereqs: ["Multi-level causation", "Mechanism vs protocol", "Sapolsky-style time scales"],
-        links: [["Open section", "../sections/general-neuroscience-health"]]
+        links: [["Open section", "sections/general-neuroscience-health"]]
       },
       sources: {
         domain: "foundation", kind: "evidence", confidence: 5,
@@ -1440,7 +1441,7 @@
         summary: "Creator and academic source maps help decide how much weight a claim deserves before you learn it deeply.",
         role: "Ranks the provenance of a claim before it enters your mental model.",
         prereqs: ["Creator credibility", "Primary literature", "Commercial incentive checks"],
-        links: [["Creators", "../sources/creators"], ["Academic sources", "../sources/academic-sources"]]
+        links: [["Creators", "sources/creators"], ["Academic sources", "sources/academic-sources"]]
       },
       biology: {
         domain: "foundation", kind: "mechanism", confidence: 5,
@@ -1448,7 +1449,7 @@
         summary: "Behavior has layered causes across genes, development, hormones, environment, and evolutionary pressure.",
         role: "Keeps learner models from collapsing into one-neurochemical explanations.",
         prereqs: ["Developmental timing", "Endocrine context", "Environmental pressure"],
-        links: [["Foundations", "../sections/general-neuroscience-health"], ["Hormones", "../sections/hormones-endocrine-health"]]
+        links: [["Foundations", "sections/general-neuroscience-health"], ["Hormones", "sections/hormones-endocrine-health"]]
       },
       perception: {
         domain: "prediction", kind: "core", confidence: 5,
@@ -1456,7 +1457,7 @@
         summary: "Experience is constructed from priors, context, bodily state, and incoming signal.",
         role: "The top-down frame: the brain actively predicts and corrects, rather than passively records.",
         prereqs: ["Priors", "Prediction error", "Attention and precision"],
-        links: [["Open section", "../sections/perception-predictive-processing-consciousness"], ["DR-011", "../sources/DR-011-audit"]]
+        links: [["Open section", "sections/perception-predictive-processing-consciousness"], ["DR-011", "sources/DR-011-audit"]]
       },
       emotion: {
         domain: "prediction", kind: "mechanism", confidence: 5,
@@ -1464,7 +1465,7 @@
         summary: "Emotion regulation and language show how body state becomes interpreted and acted on.",
         role: "Bridge between interoception, appraisal, vocabulary, and behavior.",
         prereqs: ["Interoception", "Affect labeling", "Reappraisal"],
-        links: [["Open section", "../sections/decision-making-emotion-language"]]
+        links: [["Open section", "sections/decision-making-emotion-language"]]
       },
       pain: {
         domain: "prediction", kind: "circuit", confidence: 4,
@@ -1472,7 +1473,7 @@
         summary: "Pain sits at the boundary of body signal, threat inference, attention, recovery, and action.",
         role: "Shows how bodily evidence becomes threat and how prediction shapes recovery.",
         prereqs: ["Nociception", "Threat inference", "Attention"],
-        links: [["Open section", "../sections/pain-injury-physical-health"]]
+        links: [["Open section", "sections/pain-injury-physical-health"]]
       },
       sleep: {
         domain: "state", kind: "core", confidence: 7,
@@ -1480,7 +1481,7 @@
         summary: "The master state-regulation hub for alertness, mood, learning, metabolism, and timing.",
         role: "Anchors the whole map in biological time and recovery.",
         prereqs: ["DLMO", "CBTmin", "Melanopsin", "Sleep pressure"],
-        links: [["Open section", "../sections/sleep-circadian-rhythms"], ["DR-004", "../sources/DR-004-audit"], ["DR-008", "../sources/DR-008-audit"]]
+        links: [["Open section", "sections/sleep-circadian-rhythms"], ["DR-004", "sources/DR-004-audit"], ["DR-008", "sources/DR-008-audit"]]
       },
       stress: {
         domain: "state", kind: "mechanism", confidence: 6,
@@ -1488,7 +1489,7 @@
         summary: "Explains when arousal is adaptive, when it becomes overload, and why controllability changes outcomes.",
         role: "Separates adaptive challenge from cumulative wear-and-tear.",
         prereqs: ["Allostasis", "Controllability", "Recovery dose"],
-        links: [["Open section", "../sections/stress-cortisol-resilience"], ["DR-005", "../sources/DR-005-audit"]]
+        links: [["Open section", "sections/stress-cortisol-resilience"], ["DR-005", "sources/DR-005-audit"]]
       },
       metabolism: {
         domain: "state", kind: "mechanism", confidence: 5,
@@ -1496,7 +1497,7 @@
         summary: "Energy state, exercise, food timing, glucose, and body composition feed into cognition and mood.",
         role: "Explains how body fuel and movement alter brain state without turning every biomarker into a destiny.",
         prereqs: ["Energy balance", "Acute vs long-term outcomes", "Glucose interpretation"],
-        links: [["Open section", "../sections/metabolism-exercise-nutrition"], ["DR-007", "../sources/DR-007-audit"], ["DR-012", "../sources/DR-012-audit"]]
+        links: [["Open section", "sections/metabolism-exercise-nutrition"], ["DR-007", "sources/DR-007-audit"], ["DR-012", "sources/DR-012-audit"]]
       },
       hormones: {
         domain: "state", kind: "circuit", confidence: 5,
@@ -1504,7 +1505,7 @@
         summary: "Slow chemical context for energy, fertility, risk, performance, mood, and body-state interpretation.",
         role: "Adds slow-timescale chemistry to faster state and reward models.",
         prereqs: ["Endocrine feedback", "Deficiency vs optimization", "Fertility tradeoffs"],
-        links: [["Open section", "../sections/hormones-endocrine-health"], ["DR-006", "../sources/DR-006-audit"]]
+        links: [["Open section", "sections/hormones-endocrine-health"], ["DR-006", "sources/DR-006-audit"]]
       },
       longevity: {
         domain: "state", kind: "evidence", confidence: 4,
@@ -1512,7 +1513,7 @@
         summary: "Healthspan and supplement claims need strict evidence sorting because mechanisms often outrun outcomes.",
         role: "Keeps biomarker claims from masquerading as lifespan evidence.",
         prereqs: ["Biomarker vs outcome", "Commercial claims", "Risk horizon"],
-        links: [["Open section", "../sections/longevity-aging-supplementation"]]
+        links: [["Open section", "sections/longevity-aging-supplementation"]]
       },
       focus: {
         domain: "control", kind: "core", confidence: 5,
@@ -1520,7 +1521,7 @@
         summary: "Attention decides what gets processed, learned, remembered, and acted on.",
         role: "The gatekeeper between state, reward, and learning.",
         prereqs: ["Executive control", "Arousal", "Effort allocation"],
-        links: [["Open section", "../sections/focus-attention-cognitive-control"]]
+        links: [["Open section", "sections/focus-attention-cognitive-control"]]
       },
       learning: {
         domain: "control", kind: "method", confidence: 5,
@@ -1528,7 +1529,7 @@
         summary: "The change engine of the KB: plasticity, practice, feedback, consolidation, and memory systems.",
         role: "Turns mechanisms into durable change.",
         prereqs: ["Attention", "Feedback", "Sleep consolidation"],
-        links: [["Open section", "../sections/neuroplasticity-learning-memory"]]
+        links: [["Open section", "sections/neuroplasticity-learning-memory"]]
       },
       protocols: {
         domain: "control", kind: "method", confidence: 4,
@@ -1536,7 +1537,7 @@
         summary: "Protocols become useful only after the mechanism, boundary condition, and evidence status are clear.",
         role: "Converts the map into action while keeping marketing-grade rules provisional.",
         prereqs: ["Mechanism first", "Dose and timing", "Risk and evidence status"],
-        links: [["Learning section", "../sections/neuroplasticity-learning-memory"], ["Sleep timing", "../sections/sleep-circadian-rhythms"]]
+        links: [["Learning section", "sections/neuroplasticity-learning-memory"], ["Sleep timing", "sections/sleep-circadian-rhythms"]]
       },
       ama: {
         domain: "control", kind: "evidence", confidence: 3,
@@ -1544,7 +1545,7 @@
         summary: "A mixed lookup layer. Useful for search, but not the first page to use for top-down learning.",
         role: "A reference drawer after you already know the concept you need.",
         prereqs: ["Known target concept", "Claim verification", "Context control"],
-        links: [["Open section", "../sections/live-q-a-ama-mixed-topics"]]
+        links: [["Open section", "sections/live-q-a-ama-mixed-topics"]]
       },
       dopamine: {
         domain: "valence", kind: "core", confidence: 6,
@@ -1552,7 +1553,7 @@
         summary: "The best page for wanting vs liking, reward prediction error, effort cost, addiction biology, and creator overreach.",
         role: "Explains incentive salience, effort, craving, and why pleasure is not the same as pursuit.",
         prereqs: ["Wanting vs liking", "Reward prediction error", "Effort cost"],
-        links: [["Open section", "../sections/dopamine-reward-addiction"], ["DR-003", "../sources/DR-003-dopamine-baseline"], ["DR-009", "../sources/DR-009-audit"]]
+        links: [["Open section", "sections/dopamine-reward-addiction"], ["DR-003", "sources/DR-003-dopamine-baseline"], ["DR-009", "sources/DR-009-audit"]]
       },
       mood: {
         domain: "valence", kind: "evidence", confidence: 5,
@@ -1560,7 +1561,7 @@
         summary: "The main clinical-evidence page: SSRIs, ketamine, psychedelics, gut-brain, anxiety, and treatment skepticism.",
         role: "Connects state, prediction, reward, and clinical interventions.",
         prereqs: ["Placebo", "Blinding", "Effect size", "Clinical endpoints"],
-        links: [["Open section", "../sections/mood-anxiety-depression"], ["DR-001", "../sources/DR-001-audit"], ["DR-002", "../sources/DR-002-audit"], ["DR-010", "../sources/DR-010-audit"]]
+        links: [["Open section", "sections/mood-anxiety-depression"], ["DR-001", "sources/DR-001-audit"], ["DR-002", "sources/DR-002-audit"], ["DR-010", "sources/DR-010-audit"]]
       },
       relationships: {
         domain: "valence", kind: "circuit", confidence: 4,
@@ -1568,7 +1569,7 @@
         summary: "Social context changes cognition, threat, reward, attachment, and identity.",
         role: "Adds social prediction and co-regulation to individual brain models.",
         prereqs: ["Attachment", "Social threat", "Emotion regulation"],
-        links: [["Open section", "../sections/relationships-social-behavior"]]
+        links: [["Open section", "sections/relationships-social-behavior"]]
       },
       creativity: {
         domain: "valence", kind: "method", confidence: 4,
@@ -1576,7 +1577,7 @@
         summary: "Meaning, agency, identity, and creativity are long-horizon regulators of action.",
         role: "Links motivation to long-range self models.",
         prereqs: ["Identity", "Meaning", "Agency"],
-        links: [["Open section", "../sections/creativity-identity-purpose"]]
+        links: [["Open section", "sections/creativity-identity-purpose"]]
       },
       psychiatry: {
         domain: "clinical", kind: "evidence", confidence: 4,
@@ -1584,7 +1585,7 @@
         summary: "Clinical syndromes and diagnosis-level reasoning. Needs more DR coverage than it currently has.",
         role: "Organizes disorder-level reasoning without replacing clinical judgment.",
         prereqs: ["Diagnostic category", "Treatment evidence", "Risk"],
-        links: [["Open section", "../sections/psychiatry-clinical-disorders"]]
+        links: [["Open section", "sections/psychiatry-clinical-disorders"]]
       },
       dr001: {
         domain: "clinical", kind: "evidence", confidence: 6,
@@ -1592,7 +1593,7 @@
         summary: "Separates the serotonin hypothesis from SSRI efficacy, harms, withdrawal, sexual dysfunction, and emotional blunting.",
         role: "Teaches the disease-cause vs treatment-efficacy distinction.",
         prereqs: ["Placebo-adjusted effect", "Severity dependence", "Withdrawal estimates"],
-        links: [["Source note", "../sources/DR-001-audit"]]
+        links: [["Source note", "sources/DR-001-audit"]]
       },
       dr002: {
         domain: "clinical", kind: "evidence", confidence: 5,
@@ -1600,7 +1601,7 @@
         summary: "Ketamine, esketamine, psilocybin, and MDMA evidence with attention to expectancy and functional unblinding.",
         role: "Shows why dramatic subjective effects complicate clinical trial interpretation.",
         prereqs: ["Functional unblinding", "Durability", "Regulatory endpoints"],
-        links: [["Source note", "../sources/DR-002-audit"]]
+        links: [["Source note", "sources/DR-002-audit"]]
       },
       dr003: {
         domain: "clinical", kind: "evidence", confidence: 6,
@@ -1608,7 +1609,7 @@
         summary: "Audits the dopamine baseline depletion story and separates addiction findings from healthy everyday reward claims.",
         role: "Prevents overgeneralizing addiction neuroscience into everyday motivation advice.",
         prereqs: ["Tonic vs phasic dopamine", "Addiction cohorts", "Effort cost"],
-        links: [["Source note", "../sources/DR-003-dopamine-baseline"]]
+        links: [["Source note", "sources/DR-003-dopamine-baseline"]]
       },
       dr004: {
         domain: "clinical", kind: "method", confidence: 6,
@@ -1616,7 +1617,7 @@
         summary: "Melatonin and light are real levers, but exact consumer rules are often too precise.",
         role: "Forces timing, phase, and dose into separate questions.",
         prereqs: ["DLMO", "PRC", "Lux vs melanopic dose"],
-        links: [["DR-004", "../sources/DR-004-audit"], ["DR-008", "../sources/DR-008-audit"]]
+        links: [["DR-004", "sources/DR-004-audit"], ["DR-008", "sources/DR-008-audit"]]
       },
       dr006: {
         domain: "clinical", kind: "evidence", confidence: 5,
@@ -1624,7 +1625,7 @@
         summary: "Weight loss and clinical TRT differ sharply from supplement marketing and creator booster claims.",
         role: "Separates deficiency treatment from optimization marketing.",
         prereqs: ["TRAVERSE", "Spermatogenesis", "Hematocrit"],
-        links: [["Source note", "../sources/DR-006-audit"]]
+        links: [["Source note", "sources/DR-006-audit"]]
       },
       dr007: {
         domain: "clinical", kind: "method", confidence: 5,
@@ -1632,7 +1633,7 @@
         summary: "Fasting and CGM claims only make sense when split into calories, timing, autophagy, acute glucose, and outcomes.",
         role: "Keeps acute metrics from becoming long-term health claims.",
         prereqs: ["Matched calories", "Autophagy markers", "Healthy CGM range"],
-        links: [["DR-007", "../sources/DR-007-audit"], ["DR-012", "../sources/DR-012-audit"]]
+        links: [["DR-007", "sources/DR-007-audit"], ["DR-012", "sources/DR-012-audit"]]
       },
       dr009: {
         domain: "clinical", kind: "evidence", confidence: 5,
@@ -1640,7 +1641,7 @@
         summary: "GLP-1 addiction evidence is promising but uneven; the alcohol signal is stronger than broad addiction claims.",
         role: "Separates craving from consumption and clinical signal from broad creator overreach.",
         prereqs: ["EHR confounding", "Craving vs behavior", "Substance-specific outcomes"],
-        links: [["DR-009", "../sources/DR-009-audit"]]
+        links: [["DR-009", "sources/DR-009-audit"]]
       },
       dr010: {
         domain: "clinical", kind: "evidence", confidence: 5,
@@ -1648,7 +1649,7 @@
         summary: "Gut-brain claims need careful separation: diet patterns have stronger support than broad psychobiotic claims.",
         role: "Prevents microbiome mechanisms from being absorbed as established mood interventions.",
         prereqs: ["Diet vs probiotic evidence", "Peripheral vs central serotonin", "Clinical endpoints"],
-        links: [["DR-010", "../sources/DR-010-audit"]]
+        links: [["DR-010", "sources/DR-010-audit"]]
       }
     };
 

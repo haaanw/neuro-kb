@@ -20,6 +20,7 @@ jobs:
       - run: npm ci
       - run: npx quartz plugin install
       - run: npx quartz build
+      - run: cp quartz/static/atelier.html public/index.html
       - uses: actions/upload-pages-artifact@v3
         with: { path: public }
   deploy:
