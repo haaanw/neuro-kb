@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: null
   locale: en-US
-  baseUrl: USERNAME.github.io/neuro-kb   # TODO: set to your GitHub Pages URL
+  baseUrl: haaanw.github.io/neuro-kb
   ignorePatterns:
     - private
     - templates
